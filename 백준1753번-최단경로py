@@ -1,0 +1,38 @@
+import sys
+import heapq
+read = sys.stdin.readline
+INF = sys.maxsize
+
+V, E = map(int, read().split())
+graph = [[] for _ in range(V+1)]
+k = int(read())
+weight = [INF]*(V+1)
+
+for _ in range(E):
+    u, v, w = map(int, read().split())
+    graph[u].append([w, v])
+
+
+weight[k] = 0    
+queue = []
+heapq.heappush(queue, [0, k])
+while queue:
+    cur_w, cur_pos = heapq.heappop(queue)
+    
+    if weight[cur_pos] < cur_w:
+        continue
+    
+    for next_w, next_pos in graph[cur_pos]:
+        next_w = next_w + cur_w
+        if next_w < weight[next_pos]:
+            weight[next_pos] = next_w
+            heapq.heappush(queue, [next_w, next_pos])
+
+
+for i in range(1, V+1):
+    if i==k:
+        print(0)
+    elif weight[i] == INF:
+        print("INF")
+    else:
+        print(weight[i])
