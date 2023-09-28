@@ -16,5 +16,4 @@ for _ in range(q):
     if num not in cost:
         print(0)
     else:
-        # idx = cost.index(num)
         print(value[idx[num]])
